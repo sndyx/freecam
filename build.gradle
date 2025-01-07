@@ -1,0 +1,64 @@
+import dev.architectury.pack200.java.Pack200Adapter
+import net.fabricmc.loom.task.RemapJarTask
+
+plugins {
+    id "gg.essential.loom" version "0.10.0.+"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "dev.architectury.architectury-pack200" version "0.1.3"
+}
+
+group = "com.acapitos.freecam"
+version = "1.0"
+
+base {
+    archivesName = "freecam"
+}
+
+configurations {
+    shadowImpl
+    implementation.extendsFrom shadowImpl
+}
+
+repositories {
+    maven { url = "https://repo.spongepowered.org/maven/" }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:1.8.9"
+    mappings "de.oceanlabs.mcp:mcp_stable:22-1.8.9"
+    forge "net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9"
+
+    shadowImpl "org.spongepowered:mixin:0.7.11-SNAPSHOT"
+    annotationProcessor "org.spongepowered:mixin:0.8.5-SNAPSHOT"
+}
+
+loom {
+    forge {
+        mixinConfig "mixin.freecam.json"
+        pack200Provider.set(new Pack200Adapter())
+    }
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+}
+
+jar {
+    manifest.attributes(
+            'MixinConfigs': 'mixins.freecam.json',
+            'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+            'FMLCorePluginContainsFMLMod': "true",
+            'ForceLoadAsMod': 'true',
+            'FMLCorePlugin': 'com.acapitos.freecam.mixins.MixinLoader'
+    )
+}
+
+tasks.named("remapJar", RemapJarTask) {
+    archiveClassifier.set("")
+    from tasks.shadowJar
+    input.set(tasks.shadowJar.archiveFile)
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowImpl]
+}

@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "refmap": "freecam-refmap.json",
+  "package": "com.acapitos.freecam.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "renderer.MixinViewFrustum"
+  ]
+}
