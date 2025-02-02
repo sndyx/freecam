@@ -23,7 +23,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 
-@Mod(modid = "freecam", version = "1.1")
+@Mod(modid = "freecam", version = "1.1.1")
 public class FreeCamMod {
 
     @Mod.Instance(value = "freecam")
