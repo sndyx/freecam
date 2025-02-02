@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.acapitos.freecam"
-version = "1.0"
+version = "1.1"
 
 base {
     archivesName = "freecam"
@@ -28,8 +28,8 @@ dependencies {
     mappings "de.oceanlabs.mcp:mcp_stable:22-1.8.9"
     forge "net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9"
 
-    shadowImpl "org.spongepowered:mixin:0.7.11-SNAPSHOT"
-    annotationProcessor "org.spongepowered:mixin:0.8.5-SNAPSHOT"
+    shadowImpl "org.spongepowered:mixin:0.8.5"
+    annotationProcessor "org.spongepowered:mixin:0.8.5"
 }
 
 loom {
@@ -41,16 +41,6 @@ loom {
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
-}
-
-jar {
-    manifest.attributes(
-            'MixinConfigs': 'mixins.freecam.json',
-            'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-            'FMLCorePluginContainsFMLMod': "true",
-            'ForceLoadAsMod': 'true',
-            'FMLCorePlugin': 'com.acapitos.freecam.mixins.MixinLoader'
-    )
 }
 
 tasks.named("remapJar", RemapJarTask) {
