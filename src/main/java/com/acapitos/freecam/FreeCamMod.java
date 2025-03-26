@@ -101,6 +101,8 @@ public class FreeCamMod {
         mc.setRenderViewEntity(mc.thePlayer);
     }
 
+    MovementInput movementInput;
+
     public void toggle() {
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP player = mc.thePlayer;
@@ -112,10 +114,11 @@ public class FreeCamMod {
             mc.theWorld.spawnEntityInWorld(entity);
             mc.setRenderViewEntity(entity);
 
+            movementInput = player.movementInput;
             player.movementInput = new MovementInput(); // stop all movements
             mc.mouseHelper = new StaticMouseHelper();
         } else { // disable
-            player.movementInput = new MovementInputFromOptions(mc.gameSettings);
+            player.movementInput = movementInput;
 
             mc.setRenderViewEntity(mc.thePlayer);
             mc.theWorld.removeEntity(entity);
